@@ -1,6 +1,6 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth'; // Removed signInAnonymously, signInWithCustomToken
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth';
 import { getFirestore, doc, setDoc, collection, onSnapshot, addDoc, getDoc, updateDoc, query, where, getDocs, orderBy, Timestamp } from 'firebase/firestore'; // Imported Timestamp
 import jsPDF from 'jspdf';
 
@@ -59,8 +59,8 @@ const AppContext = createContext<AppContextType | null>(null);
 function Header() {
   const context = useContext(AppContext);
   if (!context) throw new Error("Header must be used within an AppContext.Provider");
-  // Removed setCurrentPage from destructuring as it's not directly used in Header's JSX
-  const { auth, user } = context; 
+  // Include setCurrentPage in destructuring as it's used directly in onClick handlers
+  const { auth, user, setCurrentPage } = context; 
 
   const handleLogout = async () => {
     try {
@@ -81,13 +81,13 @@ function Header() {
         </h1>
         <nav className="flex items-center space-x-4">
           <button
-            onClick={() => context.setCurrentPage('dashboard')} // Use context.setCurrentPage directly
+            onClick={() => setCurrentPage('dashboard')} // Use setCurrentPage directly
             className="px-4 py-2 rounded-md bg-blue-700 hover:bg-blue-800 transition duration-200"
           >
             สัตว์เลี้ยงของฉัน <br/> My Pets
           </button>
           <button
-            onClick={() => context.setCurrentPage('vet-search')} // Use context.setCurrentPage directly
+            onClick={() => setCurrentPage('vet-search')} // Use setCurrentPage directly
             className="px-4 py-2 rounded-md bg-blue-700 hover:bg-blue-800 transition duration-200"
           >
             ค้นหาสัตวแพทย์ <br/> Find Veterinarian
@@ -468,7 +468,7 @@ function VetDashboard() {
           <h3 className="text-xl font-semibold text-blue-800 mb-2">พบสัตว์เลี้ยง: {foundAnimal.name} / Pet Found: {foundAnimal.name}</h3>
           <p className="text-gray-700 text-sm">HN: <span className="font-medium">{foundAnimal.hn}</span></p>
           <p className="text-gray-700 text-sm">ชนิด: <span className="font-medium">{foundAnimal.species}</span></p>
-          <p className="text-700 text-sm">พันธุ์: <span className="font-medium">{foundAnimal.breed}</span></p>
+          <p className="text-gray-700 text-sm">พันธุ์: <span className="font-medium">{foundAnimal.breed}</span></p>
           <p className="text-gray-700 text-sm">เพศ: <span className="font-medium">{foundAnimal.sex}</span></p>
           <div className="mt-3 text-right">
             <button
@@ -673,7 +673,7 @@ function RecordIllnessForm({ animal, onClose }: RecordIllnessFormProps) {
         const translationResponse = await fetch(translationApiUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(translationPayload)
+            body: JSON.stringify(payload)
         });
         const translationResult = await translationResponse.json();
 
