@@ -929,7 +929,7 @@ function RecordIllnessForm({ animal, onClose }: RecordIllnessFormProps) {
           {selectedImageBase64 && (
             <div className="mt-2 text-sm text-gray-600">
               รูปภาพถูกเลือกแล้ว / Image selected.
-              <img src={`data:image/png;base64,${selectedImageBase64}`} alt="Selected Pet" className="mt-2 max-h-24 rounded-md" />
+              <img src={`data:image/png;base64,${selectedImageBase64}`} alt="Illness" className="mt-2 max-h-24 rounded-md" />
             </div>
           )}
         </div>
@@ -1244,6 +1244,7 @@ function App() {
   const [db, setDb] = useState<any>(null);
   const [auth, setAuth] = useState<any>(null);
   const [userRole, setUserRole] = useState<string | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [currentPage, setCurrentPage] = useState<string>('auth');
   const [selectedAnimal, setSelectedAnimal] = useState<any>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
