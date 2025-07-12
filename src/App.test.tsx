@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import App from './App'; // ต้อง import จาก App.tsx
 
-test('renders learn react link', () => {
+test('renders PetCare App title', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const titleElement = screen.getByText(/PetCare/i); // ค้นหาข้อความ PetCare
+  expect(titleElement).toBeInTheDocument();
 });
