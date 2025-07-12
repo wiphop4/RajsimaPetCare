@@ -113,6 +113,7 @@ function Header() {
 function AuthPage() {
   const context = useContext(AppContext);
   if (!context) throw new Error("AuthPage must be used within an AppContext.Provider");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { auth, setCurrentPage, db } = context;
 
   const [isLogin, setIsLogin] = useState<boolean>(true);
