@@ -59,8 +59,8 @@ const AppContext = createContext<AppContextType | null>(null);
 function Header() {
   const context = useContext(AppContext);
   if (!context) throw new Error("Header must be used within an AppContext.Provider");
-  // Include setCurrentPage in destructuring as it's used directly in onClick handlers
-  const { auth, user, setCurrentPage } = context; 
+  // Removed setCurrentPage from destructuring to avoid ESLint 'unused' warning
+  const { auth, user } = context; 
 
   const handleLogout = async () => {
     try {
@@ -81,13 +81,13 @@ function Header() {
         </h1>
         <nav className="flex items-center space-x-4">
           <button
-            onClick={() => setCurrentPage('dashboard')} // Use setCurrentPage directly
+            onClick={() => context.setCurrentPage('dashboard')} // Use context.setCurrentPage directly
             className="px-4 py-2 rounded-md bg-blue-700 hover:bg-blue-800 transition duration-200"
           >
             สัตว์เลี้ยงของฉัน <br/> My Pets
           </button>
           <button
-            onClick={() => setCurrentPage('vet-search')} // Use setCurrentPage directly
+            onClick={() => context.setCurrentPage('vet-search')} // Use context.setCurrentPage directly
             className="px-4 py-2 rounded-md bg-blue-700 hover:bg-blue-800 transition duration-200"
           >
             ค้นหาสัตวแพทย์ <br/> Find Veterinarian
@@ -972,7 +972,7 @@ function RecordIllnessForm({ animal, onClose }: RecordIllnessFormProps) {
           <input
             type="text"
             id="bloodPressure"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-blue-400"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-1 focus:ring-400"
             value={bloodPressure}
             onChange={(e) => setBloodPressure(e.target.value)}
             placeholder="เช่น 120/80 / e.g., 120/80"
