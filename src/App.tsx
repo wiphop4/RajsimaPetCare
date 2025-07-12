@@ -673,7 +673,7 @@ function RecordIllnessForm({ animal, onClose }: RecordIllnessFormProps) {
         const translationResponse = await fetch(translationApiUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(translationPayload) // Corrected: Used translationPayload
         });
         const translationResult = await translationResponse.json();
 
